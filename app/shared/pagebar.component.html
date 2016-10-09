@@ -1,0 +1,16 @@
+<div class="am-cf">
+    <p class="am-fl">共 {{total}} 条记录</p>
+    <div class="am-fr">
+        <ul class="am-pagination">
+            <li>
+                <a href="javascript:;" (click)="setPage(curPage-1)">&laquo;</a>
+            </li>
+            <li *ngFor="let item of pages" [class.am-active]="curPage == item">
+                <a href="javascript:;" (click)="curPage = item">{{item}}</a>
+            </li>
+            <li>
+                <a href="javascript:;" (click)="setPage(curPage+1)">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</div>

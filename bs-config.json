@@ -1,0 +1,8 @@
+{
+  "port": 8000,
+  "files": ["./app/**"],
+  "server": {
+     "baseDir": "./"
+     },
+  "logConnections": false
+}

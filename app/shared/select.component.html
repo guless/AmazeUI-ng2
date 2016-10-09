@@ -1,0 +1,8 @@
+<div class="am-btn-group" data-am-button>
+    <label class="am-btn am-btn-default am-btn-xs"
+        *ngFor="let item of datas"
+        (click)="select(item)"
+        [class.am-active]="current == item">
+        <input type="radio" /> {{item[text]}}
+    </label>
+</div>

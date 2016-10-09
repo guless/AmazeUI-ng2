@@ -1,0 +1,26 @@
+[{
+	"id": "1",
+	"name": "Google Chrome",
+	"icon": "../assets/AmazeUI/i/examples/admin-chrome.png",
+	"count": 3005
+}, {
+	"id": "2",
+	"name": "Mozilla Firefox",
+	"icon": "../assets/AmazeUI/i/examples/admin-firefox.png",
+	"count": 2505
+}, {
+	"id": "3",
+	"name": "Internet Explorer",
+	"icon": "../assets/AmazeUI/i/examples/admin-ie.png",
+	"count": 1405
+}, {
+	"id": "4",
+	"name": "Opera",
+	"icon": "../assets/AmazeUI/i/examples/admin-opera.png",
+	"count": 4005
+}, {
+	"id": "5",
+	"name": "Safari",
+	"icon": "../assets/AmazeUI/i/examples/admin-safari.png",
+	"count": 505
+}]
