@@ -35,23 +35,23 @@ var SelectComponent = (function () {
         },
         set: function (value) {
             this._current = value;
-            this.propagateChange(value);
         },
         enumerable: true,
         configurable: true
     });
-    SelectComponent.prototype.select = function (item) {
-        this.current = item;
-    };
     SelectComponent.prototype.ngOnInit = function () {
         this.isInit = true;
         this.initSelect();
+    };
+    SelectComponent.prototype.select = function (item) {
+        this.current = item;
+        this.propagateChange(item);
     };
     SelectComponent.prototype.initSelect = function () {
         var datas = this._datas;
         var index = datas.indexOf(this.current);
         if (index < 0) {
-            this.select(datas.length > 0 ? datas[0] : null);
+            this.current = datas.length > 0 ? datas[0] : null;
         }
     };
     SelectComponent.prototype.registerOnChange = function (fn) {
@@ -69,10 +69,6 @@ var SelectComponent = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
-    ], SelectComponent.prototype, "initData", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
     ], SelectComponent.prototype, "current", null);
     __decorate([
         core_1.Input(), 
@@ -81,7 +77,7 @@ var SelectComponent = (function () {
     SelectComponent = __decorate([
         core_1.Component({
             selector: 'shared-select',
-            template: "\n        <div class=\"am-btn-group\" data-am-button>\n        <label class=\"am-btn am-btn-default am-btn-xs\"\n            *ngFor=\"let item of datas\"\n            (click)=\"select(item)\"\n            [class.am-active]=\"current == item\">\n            <input type=\"radio\" /> {{item[text]}}\n        </label>\n    </div>\n    ",
+            template: "<div class=\"am-btn-group\" data-am-button>\n            <label class=\"am-btn am-btn-default am-btn-xs\"\n                *ngFor=\"let item of datas\"\n                (click)=\"select(item)\"\n                [class.am-active]=\"current == item\">\n                <input type=\"radio\" /> {{item[text]}}\n            </label>\n        </div>",
             providers: [
                 {
                     provide: forms_1.NG_VALUE_ACCESSOR,

@@ -1,4 +1,4 @@
-import { NgModule,NO_ERRORS_SCHEMA  } from '@angular/core';
+import { NgModule  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SelectComponent } from './select.component'
@@ -21,7 +21,6 @@ const components = [
     declarations: [
         ...components
     ],
-    providers: [],
-    schemas:[NO_ERRORS_SCHEMA ]
+    providers: []
 })
 export class SharedModule { }

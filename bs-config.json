@@ -1,10 +1,10 @@
 {
   "port": 8000,
   "files": [
-    "./app/**"
+    "./app/**", "!./app/**/*.ts"
   ],
   "server": {
     "baseDir": "./"
   },
-  "logConnections": false
+  "open": false
 }

@@ -9,14 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var forms_1 = require('@angular/forms');
 var SelectMComponent = (function () {
     function SelectMComponent() {
         this.text = 'text';
         this._datas = [];
         this.initData = [];
-        this.current = [];
-        this.change = new core_1.EventEmitter();
         this.isInit = false;
+        //ControlValueAccessor
+        this.propagateChange = function (_) { };
     }
     Object.defineProperty(SelectMComponent.prototype, "datas", {
         get: function () { return this._datas; },
@@ -31,8 +32,17 @@ var SelectMComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(SelectMComponent.prototype, "current", {
+        get: function () {
+            return this._current;
+        },
+        set: function (value) {
+            this._current = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     SelectMComponent.prototype.ngOnInit = function () {
-        //console.log(this.current, this.datas);
         this.current = this.initData;
         this.isInit = true;
         this.initSelect();
@@ -47,24 +57,28 @@ var SelectMComponent = (function () {
             });
             this.current = list;
         }
-        this.change.emit(list);
+        this.propagateChange(this.current);
     };
     SelectMComponent.prototype.isSelect = function (item) {
-        //console.log('iselect', this.current.indexOf(item)>=0 , item);
-        return this.current.indexOf(item) >= 0;
+        return this.current && this.current.indexOf(item) >= 0;
     };
     SelectMComponent.prototype.select = function (item) {
         var _this = this;
         setTimeout(function () {
-            //console.log(item);
-            var index = _this.current.indexOf(item);
+            var index = _this.current ? _this.current.indexOf(item) : -1;
             if (index >= 0)
                 _this.current.splice(index, 1);
             else
                 _this.current.push(item);
-            //console.log(index, this.current, item);
-            _this.change.emit(_this.current);
+            _this.propagateChange(_this.current);
         }, 1);
+    };
+    SelectMComponent.prototype.registerOnChange = function (fn) {
+        this.propagateChange = fn;
+    };
+    SelectMComponent.prototype.registerOnTouched = function () { };
+    SelectMComponent.prototype.writeValue = function (value) {
+        this.current = value;
     };
     __decorate([
         core_1.Input(), 
@@ -80,14 +94,21 @@ var SelectMComponent = (function () {
         __metadata('design:type', Object)
     ], SelectMComponent.prototype, "initData", void 0);
     __decorate([
-        core_1.Output(), 
+        core_1.Input(), 
         __metadata('design:type', Object)
-    ], SelectMComponent.prototype, "change", void 0);
+    ], SelectMComponent.prototype, "current", null);
     SelectMComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'shared-select-m',
-            templateUrl: 'SelectM.component.html'
+            template: "<div class=\"am-btn-group\" data-am-button>\n          <label class=\"am-btn am-btn-default am-btn-xs\"\n            *ngFor=\"let item of datas\"\n            (click)=\"select(item)\"\n            [class.am-active]=\"isSelect(item)\">\n            <input type=\"checkbox\"> {{item[text]}}\n          </label>\n        </div>",
+            providers: [
+                {
+                    provide: forms_1.NG_VALUE_ACCESSOR,
+                    useExisting: core_1.forwardRef(function () { return SelectMComponent; }),
+                    multi: true
+                }
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], SelectMComponent);

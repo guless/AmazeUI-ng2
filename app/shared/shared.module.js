@@ -28,8 +28,7 @@ var SharedModule = (function () {
             imports: [common_1.CommonModule],
             exports: components.slice(),
             declarations: components.slice(),
-            providers: [],
-            schemas: [core_1.NO_ERRORS_SCHEMA]
+            providers: []
         }), 
         __metadata('design:paramtypes', [])
     ], SharedModule);

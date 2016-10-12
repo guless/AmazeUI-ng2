@@ -1,16 +1,30 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input,forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR  } from '@angular/forms';
 
 @Component({
     moduleId: module.id,
     selector: 'shared-select-m',
-    templateUrl: 'SelectM.component.html'
+    template:`<div class="am-btn-group" data-am-button>
+          <label class="am-btn am-btn-default am-btn-xs"
+            *ngFor="let item of datas"
+            (click)="select(item)"
+            [class.am-active]="isSelect(item)">
+            <input type="checkbox"> {{item[text]}}
+          </label>
+        </div>`,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SelectMComponent),
+            multi: true
+        }
+    ]
 })
-export class SelectMComponent implements OnInit {
+export class SelectMComponent implements OnInit, ControlValueAccessor {
 
     @Input() text = 'text';
 
     private _datas = [];
-
     @Input()
     set datas(datas: any[]) {
         datas || (datas = []);
@@ -24,15 +38,19 @@ export class SelectMComponent implements OnInit {
 
     @Input() initData = [];
 
-    current = [];
-
-    @Output() change = new EventEmitter<any>();
+    private _current:any;
+    @Input()
+	public get current(): any {
+		return this._current;
+	}
+	public set current(value: any) {
+		this._current = value;
+	}
 
     constructor() { }
 
     isInit = false;
     ngOnInit() {
-        //console.log(this.current, this.datas);
         this.current = this.initData;
         this.isInit = true; 
         this.initSelect();
@@ -46,25 +64,35 @@ export class SelectMComponent implements OnInit {
             });
             this.current = list;
         }
-        this.change.emit(list);
+        this.propagateChange(this.current);
     }
 
     isSelect(item: any) {
-        //console.log('iselect', this.current.indexOf(item)>=0 , item);
-        return this.current.indexOf(item) >= 0;
+        return this.current && this.current.indexOf(item) >= 0;
     }
 
     select(item: any) {
         setTimeout(()=>{
-            //console.log(item);
-            var index = this.current.indexOf(item);
+            var index = this.current ? this.current.indexOf(item) : -1;
             if (index >= 0)
                 this.current.splice(index, 1);
             else
                 this.current.push(item);
-            //console.log(index, this.current, item);
-            this.change.emit(this.current);
+            this.propagateChange(this.current);
 
         },1);
     }
+
+    //ControlValueAccessor
+    propagateChange = (_: any) => { };
+    registerOnChange(fn) {
+        this.propagateChange = fn;
+    }
+
+    registerOnTouched() { }
+
+    writeValue(value: any) {
+        this.current = value;
+    }
+    //end ControlValueAccessor
 }
