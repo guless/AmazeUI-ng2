@@ -1,5 +1,6 @@
 import { NgModule  } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule }   from '@angular/forms';
 
 import { SelectComponent } from './select.component'
 import { SelectMComponent } from './selectM.component'
@@ -14,9 +15,10 @@ const components = [
 ];
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule],
     exports: [
-        ...components
+        ...components,
+        CommonModule, FormsModule
     ],
     declarations: [
         ...components

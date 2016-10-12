@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var forms_1 = require('@angular/forms');
+var shared_module_1 = require('../../shared/shared.module');
 var page_routing_1 = require('./page.routing');
 var PageModule = (function () {
     function PageModule() {
@@ -18,7 +18,7 @@ var PageModule = (function () {
         core_1.NgModule({
             imports: [
                 page_routing_1.routing,
-                forms_1.FormsModule
+                shared_module_1.SharedModule
             ],
             exports: [],
             declarations: page_routing_1.routeDeclarations.slice(),

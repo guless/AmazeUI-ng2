@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
+var forms_1 = require('@angular/forms');
 var select_component_1 = require('./select.component');
 var selectM_component_1 = require('./selectM.component');
 var pagebar_component_1 = require('./pagebar.component');
@@ -25,8 +26,11 @@ var SharedModule = (function () {
     }
     SharedModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule],
-            exports: components.slice(),
+            imports: [common_1.CommonModule, forms_1.FormsModule],
+            exports: components.concat([
+                common_1.CommonModule,
+                forms_1.FormsModule
+            ]),
             declarations: components.slice(),
             providers: []
         }), 
