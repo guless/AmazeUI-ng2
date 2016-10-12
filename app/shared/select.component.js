@@ -9,12 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var forms_1 = require('@angular/forms');
 var SelectComponent = (function () {
     function SelectComponent() {
         this._datas = [];
-        this.change = new core_1.EventEmitter();
         this.text = 'text';
         this.isInit = false;
+        //ControlValueAccessor
+        this.propagateChange = function (_) { };
     }
     Object.defineProperty(SelectComponent.prototype, "datas", {
         get: function () { return this._datas; },
@@ -27,13 +29,21 @@ var SelectComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(SelectComponent.prototype, "current", {
+        get: function () {
+            return this._current;
+        },
+        set: function (value) {
+            this._current = value;
+            this.propagateChange(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
     SelectComponent.prototype.select = function (item) {
-        //console.log('select', item);
         this.current = item;
-        this.change.emit(this.current);
     };
     SelectComponent.prototype.ngOnInit = function () {
-        this.current = this.initData;
         this.isInit = true;
         this.initSelect();
     };
@@ -43,6 +53,13 @@ var SelectComponent = (function () {
         if (index < 0) {
             this.select(datas.length > 0 ? datas[0] : null);
         }
+    };
+    SelectComponent.prototype.registerOnChange = function (fn) {
+        this.propagateChange = fn;
+    };
+    SelectComponent.prototype.registerOnTouched = function () { };
+    SelectComponent.prototype.writeValue = function (value) {
+        this.current = value;
     };
     __decorate([
         core_1.Input(), 
@@ -54,18 +71,24 @@ var SelectComponent = (function () {
         __metadata('design:type', Object)
     ], SelectComponent.prototype, "initData", void 0);
     __decorate([
-        core_1.Output(), 
+        core_1.Input(), 
         __metadata('design:type', Object)
-    ], SelectComponent.prototype, "change", void 0);
+    ], SelectComponent.prototype, "current", null);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
     ], SelectComponent.prototype, "text", void 0);
     SelectComponent = __decorate([
         core_1.Component({
-            moduleId: module.id,
             selector: 'shared-select',
-            templateUrl: 'select.component.html'
+            template: "\n        <div class=\"am-btn-group\" data-am-button>\n        <label class=\"am-btn am-btn-default am-btn-xs\"\n            *ngFor=\"let item of datas\"\n            (click)=\"select(item)\"\n            [class.am-active]=\"current == item\">\n            <input type=\"radio\" /> {{item[text]}}\n        </label>\n    </div>\n    ",
+            providers: [
+                {
+                    provide: forms_1.NG_VALUE_ACCESSOR,
+                    useExisting: core_1.forwardRef(function () { return SelectComponent; }),
+                    multi: true
+                }
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], SelectComponent);

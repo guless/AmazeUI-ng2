@@ -29,6 +29,7 @@ var SharedModule = (function () {
             exports: components.slice(),
             declarations: components.slice(),
             providers: [],
+            schemas: [core_1.NO_ERRORS_SCHEMA]
         }), 
         __metadata('design:paramtypes', [])
     ], SharedModule);

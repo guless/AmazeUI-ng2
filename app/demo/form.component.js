@@ -13,6 +13,7 @@ var FormComponent = (function () {
     function FormComponent() {
         this.selectDatas = [{ id: 1, text: '正常' }, { id: 2, text: '待审核' }, { id: 3, text: '不显示' }];
         this.selectCurrent = this.selectDatas[1];
+        this.test1 = 'option2';
         this.selectDatasM = [{ id: 1, text: '允许评论' }, { id: 2, text: '置顶' }, { id: 3, text: '推荐' }, { id: 4, text: '热门' }, { id: 5, text: '轮播图' }];
         this.selectCurrentM = this.selectDatasM.slice(1, 3);
         this.saveData = '';

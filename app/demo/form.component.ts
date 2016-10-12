@@ -19,6 +19,8 @@ export class FormComponent implements OnInit {
         this.selectCurrent = item;
     }
 
+    test1 = 'option2';
+
     selectDatasM = [{id:1, text:'允许评论'},{id:2, text:'置顶'},{id:3, text:'推荐'},{id:4, text:'热门'},{id:5, text:'轮播图'}];
 
     selectCurrentM = this.selectDatasM.slice(1,3);
