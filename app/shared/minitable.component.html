@@ -8,15 +8,20 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let row of pagebar.curDatas">
+        <tr *ngFor="let row of pagebar.curDatas; let rowIndex = index">
             <td><input type="checkbox" /></td>
-            <td *ngFor="let col of column" >
-                <span *ngIf="!!col.formatter"
-                    [innerHtml]="col.formatter(row[col.name], col, row)">
-                </span>
-                <span *ngIf="!col.formatter">
-                    {{row[col.name]}}
-                </span>
+            <td *ngFor="let col of column; let colIndex = index" >
+                <template [ngIf]="col.template">
+                    <template [ngTemplateOutlet]="col.template" [ngOutletContext]="{ $implicit: {col:col, row:row, colIndex:colIndex, rowIndex:rowIndex} }"></template>
+                </template>
+                <template [ngIf]="!col.template">
+                    <template [ngIf]="!!col.formatter">
+                        {{col.formatter(row[col.name], col, row)}}
+                    </template>
+                    <template [ngIf]="!col.formatter">
+                        {{row[col.name]}}
+                    </template>
+                </template>
             </td>
         </tr>
     </tbody>

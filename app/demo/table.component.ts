@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
     moduleId: module.id,
@@ -7,46 +7,56 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableComponent implements OnInit {
 
-    tableColumn = [{
-        name: 'id',
-        title: 'ID',
-        width: 50
-    }, {
-        name: 'title',
-        title: '标题',
-        formatter: function (cellvalue, col, row) {
-            return '<a href="javascript:void">' + cellvalue + '</a>';
-        }
-    }, {
-        name: 'type',
-        title: '类别',
-        width: 70
-    }, {
-        name: 'user',
-        title: '作者',
-        width: 80
-    }, {
-        name: 'date',
-        title: '修改日期',
-        width: 180
-    }, {
-        name: '',
-        title: '操作',
-        width: 230,
-        formatter: function (cellvalue, col, row) {
-            return `<div class="am-btn-toolbar">
-                                    <div class="am-btn-group am-btn-group-xs">
-                                        <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-                                        <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>
-                                        <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-                                    </div>
-                                </div>`;
-        }
-    }];
+    @ViewChild('rowToolbar') rowToolbar: any;
+    @ViewChild('rowName') rowName: any;
+
+    tableColumn = [];
 
     tableDatas = [];
 
     constructor() {
+
+    }
+
+    print(cell:any){
+        console.log(cell);
+    }
+
+    del(row:any){
+        this.tableDatas = this.tableDatas.filter(item=>item !=row)
+    }
+
+    ngOnInit() {
+        this.tableColumn = [{
+            name: 'id',
+            title: 'ID',
+            width: 50
+        }, {
+            name: 'title',
+            title: '标题',
+            template:this.rowName
+        }, {
+            name: 'type',
+            title: '类别',
+            width: 70,
+            formatter: function (cellvalue, col, row) {
+                return cellvalue;
+            }
+        }, {
+            name: 'user',
+            title: '作者',
+            width: 80
+        }, {
+            name: 'date',
+            title: '修改日期',
+            width: 180
+        }, {
+            name: '',
+            title: '操作',
+            width: 230,
+            template: this.rowToolbar
+        }];
+
         let model = {
             id: '',
             title: 'Business management',
@@ -65,7 +75,5 @@ export class TableComponent implements OnInit {
         }
         this.tableDatas = datas;
     }
-
-    ngOnInit() { }
 
 }

@@ -11,6 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var TableComponent = (function () {
     function TableComponent() {
+        this.tableColumn = [];
+        this.tableDatas = [];
+    }
+    TableComponent.prototype.print = function (cell) {
+        console.log(cell);
+    };
+    TableComponent.prototype.del = function (row) {
+        this.tableDatas = this.tableDatas.filter(function (item) { return item != row; });
+    };
+    TableComponent.prototype.ngOnInit = function () {
         this.tableColumn = [{
                 name: 'id',
                 title: 'ID',
@@ -18,13 +28,14 @@ var TableComponent = (function () {
             }, {
                 name: 'title',
                 title: '标题',
-                formatter: function (cellvalue, col, row) {
-                    return '<a href="javascript:void">' + cellvalue + '</a>';
-                }
+                template: this.rowName
             }, {
                 name: 'type',
                 title: '类别',
-                width: 70
+                width: 70,
+                formatter: function (cellvalue, col, row) {
+                    return cellvalue;
+                }
             }, {
                 name: 'user',
                 title: '作者',
@@ -37,11 +48,8 @@ var TableComponent = (function () {
                 name: '',
                 title: '操作',
                 width: 230,
-                formatter: function (cellvalue, col, row) {
-                    return "<div class=\"am-btn-toolbar\">\n                                    <div class=\"am-btn-group am-btn-group-xs\">\n                                        <button class=\"am-btn am-btn-default am-btn-xs am-text-secondary\"><span class=\"am-icon-pencil-square-o\"></span> \u7F16\u8F91</button>\n                                        <button class=\"am-btn am-btn-default am-btn-xs am-hide-sm-only\"><span class=\"am-icon-copy\"></span> \u590D\u5236</button>\n                                        <button class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only\"><span class=\"am-icon-trash-o\"></span> \u5220\u9664</button>\n                                    </div>\n                                </div>";
-                }
+                template: this.rowToolbar
             }];
-        this.tableDatas = [];
         var model = {
             id: '',
             title: 'Business management',
@@ -62,8 +70,15 @@ var TableComponent = (function () {
             _loop_1(i);
         }
         this.tableDatas = datas;
-    }
-    TableComponent.prototype.ngOnInit = function () { };
+    };
+    __decorate([
+        core_1.ViewChild('rowToolbar'), 
+        __metadata('design:type', Object)
+    ], TableComponent.prototype, "rowToolbar", void 0);
+    __decorate([
+        core_1.ViewChild('rowName'), 
+        __metadata('design:type', Object)
+    ], TableComponent.prototype, "rowName", void 0);
     TableComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

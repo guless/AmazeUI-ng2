@@ -43,6 +43,19 @@
         <div class="am-u-sm-12">
             <form class="am-form">
                 <minitable [datas]="tableDatas" [column]="tableColumn"></minitable>
+                <template #rowToolbar let-cell>
+                    <div class="am-btn-toolbar">
+                        <div class="am-btn-group am-btn-group-xs">
+                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary" disabled><span class="am-icon-pencil-square-o"></span> 编辑</button>
+                            <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only" disabled><span class="am-icon-copy"></span> 复制</button>
+                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
+                                (click)="del(cell.row)"><span class="am-icon-trash-o"></span> 删除</button>
+                        </div>
+                    </div>
+                </template>
+                <template #rowName let-cell>
+                    <a href="javascript:;" (click)="print(cell)">{{cell.row.title}}</a>
+                </template>
                 <hr />
                 <p>注：.....</p>
             </form>
