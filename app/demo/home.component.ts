@@ -9,18 +9,18 @@ import { RestService } from '../shared/rest.service';
 })
 
 export class HomeComponent implements OnInit, OnDestroy {
-	private newPage = 2300;
-	private order = 308;
-	private visit = 80082;
-	private online = 1300;
+	 newPage = 2300;
+	 order = 308;
+	 visit = 80082;
+	 online = 1300;
 
-	private table = [];
+	 table:any[] = [];
 
-	private progress = 0;
+	 progress = 0;
 
-	private browsers = [];
+	 browsers:any[] = [];
 
-	private disposed = false;
+	 disposed = false;
 
 	constructor(private rest: RestService) { }
 
@@ -63,10 +63,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.increaseProgress();
 
 		this.rest.getJson('list.json')
-			.subscribe(rs => this.table = rs.json());
+			.subscribe(rs => this.table = rs.json() as any[]);
 
 		this.rest.getJson('browser.json')
-			.subscribe(rs => { this.browsers = rs.json(); this.increaseBrowse(); });
+			.subscribe(rs => { this.browsers = rs.json() as any[]; this.increaseBrowse(); });
 	}
 
 	ngOnDestroy() {

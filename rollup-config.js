@@ -3,8 +3,8 @@ import nodeResolve from 'rollup-plugin-node-resolve'
 import commonjs    from 'rollup-plugin-commonjs';
 import uglify      from 'rollup-plugin-uglify'
 export default {
-  entry: 'app/main.js',
-  dest: 'dist/build.js', // output a single application bundle
+  entry: 'app/main-aot.js',
+  dest: 'aot/build.js', // output a single application bundle
   sourceMap: false,
   format: 'iife',
   plugins: [

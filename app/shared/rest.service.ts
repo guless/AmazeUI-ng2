@@ -10,7 +10,7 @@ export class RestService {
 
     constructor(private http: Http) { }
 
-    private makePath(path):string{
+    private makePath(path:string):string{
         return [this.restPath, path].join('/');
     }
 
